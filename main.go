@@ -1,10 +1,11 @@
 package main
 
 import (
-	cloudevents "github.com/cloudevents/sdk-go/v2"
-	spinhttp "github.com/fermyon/spin/sdk/go/v2/http"
 	"log"
 	"net/http"
+
+	cloudevents "github.com/cloudevents/sdk-go/v2"
+	spinhttp "github.com/fermyon/spin/sdk/go/v2/http"
 )
 
 func init() {
