@@ -1,0 +1,18 @@
+spin_manifest_version = 2
+
+[application]
+name = "spin-event"
+version = "0.1.0"
+authors = ["quyumkehinde <quyumkehinde@gmail.com>"]
+description = "An app for testing event gateway"
+
+[[trigger.http]]
+route = "/consumer"
+component = "spin-event"
+
+[component.spin-event]
+source = "main.wasm"
+allowed_outbound_hosts = []
+[component.spin-event.build]
+command = "tinygo build -target=wasi -gc=leaking -no-debug -o main.wasm main.go"
+watch = ["**/*.go", "go.mod"]
