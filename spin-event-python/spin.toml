@@ -1,0 +1,21 @@
+spin_manifest_version = 2
+
+[application]
+authors = ["quyumkehinde <quyumkehinde@gmail.com>"]
+description = "Event gateway testing Spin app in Python"
+name = "spin-event-python"
+version = "0.1.0"
+
+[[trigger.http]]
+route = "/event"
+component = "spin-event-python"
+
+[component.spin-event-python]
+source = "app.wasm"
+allowed_outbound_hosts = [
+    "http://kubebuilder-controller-manager-service.kubebuilder-system.svc.cluster.local",
+]
+
+[component.spin-event-python.build]
+command = "RUST_LOG=trace componentize-py -w spin-http componentize app -o app.wasm"
+watch = ["*.py", "requirements.txt"]
