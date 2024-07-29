@@ -6,6 +6,12 @@ description = "Event gateway testing Spin app in Python"
 name = "spin-event-python"
 version = "0.1.0"
 
+[variables]
+spin_app_svc = { default = "spin-event-python" }
+spin_app_namespace = { default = "default" }
+gateway_name = { default = "solenoid-controller-manager" }
+gateway_namespace = { default = "solenoid-system" }
+
 [[trigger.http]]
 route = "/event"
 component = "spin-event-python"
@@ -13,8 +19,18 @@ component = "spin-event-python"
 [component.spin-event-python]
 source = "app.wasm"
 allowed_outbound_hosts = [
-    "http://kubebuilder-controller-manager-service.kubebuilder-system.svc.cluster.local",
+    "http://{{ gateway_name }}-service.{{ gateway_namespace }}.svc.cluster.local",
+    # Allow requests to any service in the solenoid namespace
+    # "http://*.solenoid-system.svc.cluster.local",
+    # "http://solenoid-controller-manager-service.solenoid-system.svc.cluster.local",
 ]
+
+
+[component.spin-event-python.variables]
+spin_app_svc = "{{ spin_app_svc }}"
+spin_app_namespace = "{{ spin_app_namespace }}"
+gateway_name = "{{ gateway_name }}"
+gateway_namespace = "{{ gateway_namespace }}"
 
 [component.spin-event-python.build]
 command = "RUST_LOG=trace componentize-py -w spin-http componentize app -o app.wasm"
