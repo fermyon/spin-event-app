@@ -1,7 +1,7 @@
 apiVersion: core.spinoperator.dev/v1alpha1
 kind: SpinApp
 metadata:
-  name: spin-app-python
+  name: spin-event-python
 spec:
   image: "docker.io/quyum/spin-app-python:latest"
   executor: containerd-shim-spin
