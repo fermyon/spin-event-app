@@ -2,7 +2,22 @@ apiVersion: core.spinoperator.dev/v1alpha1
 kind: SpinApp
 metadata:
   name: spin-event-python
+  labels:
+    app: spin-event-python
 spec:
   image: "docker.io/quyum/spin-app-python:latest"
   executor: containerd-shim-spin
   replicas: 1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spin-event-python
+spec:
+  selector:
+    app: spin-event-python
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

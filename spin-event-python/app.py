@@ -12,7 +12,7 @@ class IncomingHandler(IncomingHandler):
             event = cloudevents.http.CloudEvent.create({
                 "type": "com.spin-event-python.person",
                 "source": source_url(),
-            }, {"user1": {"id": 12, "name": "Quyum", "age": 24}})
+            }, {"user": {"id": 12, "name": "John Doe", "age": 24}})
             data = cloudevents.conversion.to_binary(event)
             
             # Change to the address of your event gateway service (kubectl get svc -A)
